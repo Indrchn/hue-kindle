@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Hue Group Control</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; text-align: center; }
+    h2 { margin-top: 40px; }
+    button {
+      font-size: 2em;
+      margin: 10px;
+      padding: 20px;
+      width: 80%;
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hue Group Control</h1>
+
+  <h2>Living Room</h2>
+  <button onclick="toggleGroup(6, true)">Turn ON</button>
+  <button onclick="toggleGroup(6, false)">Turn OFF</button>
+
+  <h2>Bedroom</h2>
+  <button onclick="toggleGroup(1, true)">Turn ON</button>
+  <button onclick="toggleGroup(1, false)">Turn OFF</button>
+
+
+
+  <script>
+    const bridgeIP = "192.168.178.20"; // Replace with your bridge IP
+    const username = "zzIHQrYfkwusPC7ONZPtONvvrPPUiBpwZENyNXUF"; // Replace with your token
+
+    function toggleGroup(groupID, state) {
+      fetch(`http://${bridgeIP}/api/${username}/groups/${groupID}/action`, {
+        method: "PUT",
+        body: JSON.stringify({ on: state })
+      })
+      .then(() => alert(`Group ${groupID} ${state ? 'ON' : 'OFF'}`))
+      .catch(err => alert("Error: " + err));
+    }
+  </script>
+</body>
+</html>
